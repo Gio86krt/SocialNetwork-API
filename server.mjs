@@ -8,8 +8,7 @@ import {
   updatePost,
   writePost,
 } from "./controllers/postsController.mjs";
-// import fs from "fs";
-// import http from "http";
+import { sendFrontPage } from "./controllers/viewController.mjs";
 
 const app = express();
 const PORT = 3000;
@@ -23,7 +22,7 @@ app.delete("/delete", deletePost);
 
 app.patch("/update", updatePost);
 
-// app.get("/", sendFrontPage)
+app.get("/", sendFrontPage);
 app.get("/readAll", readAll);
 app.get("/readOne", readOne);
 
