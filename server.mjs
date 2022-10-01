@@ -9,6 +9,7 @@ import {
   writePost,
 } from "./controllers/postsController.mjs";
 import { sendFrontPage } from "./controllers/viewController.mjs";
+import { sendPosts } from "./controllers/databaseController.mjs";
 
 const app = express();
 const PORT = 3000;
@@ -23,6 +24,7 @@ app.delete("/delete", deletePost);
 app.patch("/update", updatePost);
 
 app.get("/", sendFrontPage);
+app.get("/dummy_database", sendPosts);
 app.get("/readAll", readAll);
 app.get("/readOne", readOne);
 

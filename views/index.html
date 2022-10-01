@@ -13,9 +13,32 @@
 <body>
     <h1>Bootstrap test</h1>
 
+    <div class="container">
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
         crossorigin="anonymous"></script>
+
+    <script>
+        async function getPosts() {
+            const result = await fetch('http://localhost:3000/dummy_database');
+            console.log(result, 'result');
+            const data = await result.json();
+            console.log(data, 'data');
+
+            const keys = Object.keys(data);
+
+            keys.forEach(key => {
+                document.querySelector('.container').innerHTML += `
+                <h3>${data[key].author}</h3>
+                <h4>${data[key].content}</h4>
+                `;
+            })
+        };
+
+        window.onload = getPosts();
+    </script>
 </body>
 
 </html>
