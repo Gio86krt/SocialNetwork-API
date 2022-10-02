@@ -6,36 +6,119 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Social Network - API</title>
+    <link rel="stylesheet" type="text/css" href="./assets/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 </head>
 
 <body>
-    <h1>Bootstrap test</h1>
+    <style>
+        body {
+            background-color: whitesmoke;
+        }
+
+        .header {
+            background-color: whitesmoke;
+            box-shadow: 0 0 2px 3px grey;
+        }
+
+        .container {
+            margin-top: 5%;
+        }
+
+        .avatar {
+            width: fit-content;
+            height: 30px;
+            background-color: aqua;
+            text-align: center;
+        }
+
+        .header_container {
+            align-items: center;
+            justify-content: center;
+        }
+
+        div {
+            border: 1px solid black;
+        }
+
+        .comments_container {
+            padding: 0 5% 0 5%;
+        }
+    </style>
+
+
+    <div class="header">
+        <div class="row header_container">
+            <div class="col-6">
+                <h1>Social Network Test</h1>
+            </div>
+            <div class="col-2">
+                <a href="/login"> Login </a>
+            </div>
+            <div class="col-2">
+                <a href="/register"> Register </a>
+            </div>
+        </div>
+    </div>
 
     <div class="container">
+        <div class="posts_container">
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
         crossorigin="anonymous"></script>
-
     <script>
         async function getPosts() {
-            const result = await fetch('http://localhost:3000/dummy_database');
-            console.log(result, 'result');
+            const result = await fetch("http://localhost:3000/dummy_database");
+            console.log(result, "result");
             const data = await result.json();
-            console.log(data, 'data');
+            console.log(data, "data");
 
             const keys = Object.keys(data);
 
-            keys.forEach(key => {
-                document.querySelector('.container').innerHTML += `
-                <h3>${data[key].author}</h3>
-                <h4>${data[key].content}</h4>
-                `;
-            })
-        };
+            const parent = document.querySelector(".posts_container");
+
+            keys.forEach((key) => {
+                drawFields(data, key, parent);
+
+
+                const keysComments = Object.keys(data[key].comments);
+                if (keysComments.length > 0) {
+                    const parent = document.querySelector(`#${key}`);
+                    const commentsDiv = document.createElement('div');
+                    commentsDiv.setAttribute("class", "comments_container")
+                    parent.appendChild(commentsDiv)
+                    keysComments.forEach(keyComment => drawFields(data[key].comments, keyComment, commentsDiv))
+                }
+            });
+        }
+
+
+        function drawFields(data, key, parent) {
+            const divRow = document.createElement("div");
+            const divName = document.createElement("div");
+            const divContent = document.createElement("div");
+            const divAvatar = document.createElement("div");
+
+            divRow.setAttribute("class", "row")
+            divName.setAttribute("class", "col-11 div_author");
+            divAvatar.setAttribute("class", "col-11 avatar");
+            divContent.setAttribute("class", "col-12 div_content");
+
+            divRow.setAttribute("id", key);
+            divName.textContent = data[key].author;
+            divContent.textContent = data[key].content;
+            const authorName = data[key].author.split(' ');
+            divAvatar.textContent = authorName.length > 1 ? authorName[0][0].toUpperCase() + authorName[1][0].toUpperCase() : authorName[0][0].toUpperCase();
+
+            divRow.appendChild(divAvatar);
+            divRow.appendChild(divName);
+            divRow.appendChild(divContent);
+            parent.appendChild(divRow);
+        }
 
         window.onload = getPosts();
     </script>

@@ -1,18 +1,47 @@
 {
-    "1":{
-        "author":"James",
-        "content":"Is this real??"
+    "post1":{
+        "avatar":"",
+        "author":"Someone",
+        "content":"the Earth is Flat!",
+        "comments":{
+            "1":{
+                "author":"James",
+                "content":"Is this real??"
+            },
+            "2":{
+                "author":"Frank",
+                "content":"LOL"
+            },
+            "3":{
+                "author":"Goku",
+                "content":"I knew it!"
+            },
+            "4":{
+                "author":"John",
+                "content":"Go to work."
+            }
+        }
     },
-    "2":{
-        "author":"Frank",
-        "content":"Is this real??"
-    },
-    "3":{
-        "author":"Goku",
-        "content":"Is this real??"
-    },
-    "4":{
-        "author":"John",
-        "content":"Is this real??"
+    "post2":{
+        "author":"Someone Else",
+        "content":"Pizza is a sphere!",
+        "comments":{
+            "1":{
+                "author":"James",
+                "content":"Is this real??"
+            },
+            "2":{
+                "author":"Frank",
+                "content":"LOL"
+            },
+            "3":{
+                "author":"Goku",
+                "content":"I knew it!"
+            },
+            "4":{
+                "author":"John",
+                "content":"Go to work."
+            }
+        }
     }
 }
