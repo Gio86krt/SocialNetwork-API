@@ -1,27 +1,57 @@
-export const readAll = (req, res) => {
-  console.log("readall");
-  res.send("readallterst");
-};
+import fs from "fs";
+import { pool } from "../database/connection.mjs";
+import { randomUUID } from "crypto";
 
 export const readOne = (req, res) => {
   const postId = req.query.postId;
-  console.log("readone", postId);
-  res.send("readone");
+
+  res.send();
 };
 
 export const writePost = (req, res) => {
-  console.log("writepost");
-  res.send("writepost");
+  const { author, content } = req.body;
+
+  const id = randomUUID();
+
+  try {
+    res.send({ write: true, id });
+  } catch (err) {
+    console.log(err);
+    res.end(err);
+  }
 };
 
 export const updatePost = (req, res) => {
   const postId = req.query.postId;
-  console.log("update", postId);
-  res.send("update");
+  const { content } = req.body;
+
+  try {
+    res.send({ updated: true });
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 export const deletePost = (req, res) => {
   const postId = req.query.postId;
-  console.log("delete", postId);
-  res.send("delete");
+
+  try {
+    res.send({ deleted: true });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getPosts = (req, res) => {
+  return new Promise(async (resolve, reject) => {
+    const sql =
+      "SELECT users.username, content FROM tweets join users on users.guid = author";
+    await pool.query(sql, [], (err, result) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    });
+  });
 };

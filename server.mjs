@@ -1,31 +1,30 @@
 import express from "express";
-import { login, register } from "./controllers/authenticationController.mjs";
+import bodyParser from "body-parser";
+import { login, register } from "./services/usersService.mjs";
 import { writeComment } from "./controllers/commentsController.mjs";
 import {
   deletePost,
-  readAll,
   readOne,
   updatePost,
   writePost,
 } from "./controllers/postsController.mjs";
 import { sendFrontPage } from "./controllers/viewController.mjs";
-import { sendPosts } from "./controllers/databaseController.mjs";
 
 const app = express();
 const PORT = 3000;
 
-app.post("/writePost", writePost);
-app.post("/writeComment", writeComment);
+app.use(bodyParser.json());
+
 app.post("/login", login);
 app.post("/register", register);
+app.post("/writePost", writePost);
+app.post("/writeComment", writeComment);
 
 app.delete("/delete", deletePost);
 
 app.patch("/update", updatePost);
 
 app.get("/", sendFrontPage);
-app.get("/dummy_database", sendPosts);
-app.get("/readAll", readAll);
 app.get("/readOne", readOne);
 
 app.get("*", (req, res) => {
