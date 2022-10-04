@@ -1,4 +1,5 @@
 import { pool } from "../database/connection.mjs";
+import { randomUUID } from "crypto";
 
 export const getUserByUsername = (username) => {
   return new Promise(async (resolve, reject) => {
@@ -39,7 +40,6 @@ export const updateUserToken = async (guid, token) => {
     });
   });
 };
-
 
 export const getUsers = () => {
   return new Promise(async (resolve, reject) => {
