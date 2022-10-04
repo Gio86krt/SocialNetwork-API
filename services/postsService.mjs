@@ -17,11 +17,12 @@ export const readOne = async (req, res) => {
 
   try {
     const post = await getPost(postId);
+    const comments = await readComments(postId);
     if (!post) {
       res.end("Something went wrong.");
     }
 
-    res.send(post);
+    res.send({ post, comments });
   } catch (err) {
     res.end("Something went wrong.");
   }
