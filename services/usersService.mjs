@@ -54,22 +54,15 @@ export const login = async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    //get passsword from db
-    console.log("test");
     const userData = await loginUser(username, password);
-    console.log(userData, "userdata");
-    if (!userData) res.end("Incorrect username or password.");
-    //if correct give token
-    // if (!userData.token) {
+    if (!userData) {
+      res.end("Incorrect username or password.");
+    }
     let token = await generateToken(userData.guid);
-    // } else {
-    //   console.log("TOKEN 2");
-    // }
-    // const verify = verifyToken();
-    const update = await updateUserToken(token);
+    await updateUserToken(token);
 
     res.send("logged in");
   } catch (err) {
-    res.end(err);
+    res.end("Incorrect username or password.");
   }
 };
