@@ -19,9 +19,9 @@ export const register = async (req, res) => {
   }
 
   //sanitize inputs
-  username = await cleanInput(username);
-  password = await cleanInput(password);
-  retypePassword = await cleanInput(retypePassword);
+  username = cleanInput(username);
+  password = cleanInput(password);
+  retypePassword = cleanInput(retypePassword);
 
   try {
     const checkDoubles = await getUserByUsername(username);
@@ -55,8 +55,10 @@ export const login = async (req, res) => {
 
   try {
     //get passsword from db
+    console.log("test");
     const userData = await loginUser(username, password);
-    if (!userData) throw new Error("Incorrect username or password.");
+    console.log(userData, "userdata");
+    if (!userData) res.end("Incorrect username or password.");
     //if correct give token
     // if (!userData.token) {
     let token = await generateToken(userData.guid);
@@ -68,6 +70,6 @@ export const login = async (req, res) => {
 
     res.send("logged in");
   } catch (err) {
-    console.log(err);
+    res.end(err);
   }
 };

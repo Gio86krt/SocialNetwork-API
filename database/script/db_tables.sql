@@ -13,8 +13,7 @@ create table if not exists `posts` (
     `guid` varchar(255) unique not null,
     `author` varchar(255),
     `content` varchar(600),
-    `date` DATETIME DEFAULT CURRENT_TIMESTAMP,
-    foreign key (`author`) references `users`(`guid`)
+    `date` DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 
@@ -23,7 +22,5 @@ create table if not exists `comments` (
     `author` varchar(255),
     `content` varchar(400),
     `post` varchar(255),
-    `date` DATETIME DEFAULT CURRENT_TIMESTAMP,
-    foreign key (`author`) references `users`(`guid`),
-    foreign key (`post`) references `posts`(`guid`)
+    `date` DATETIME DEFAULT CURRENT_TIMESTAMP
 )
