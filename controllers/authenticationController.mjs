@@ -58,7 +58,7 @@ export const getUserByUsername = (username) => {
 
     await pool.query(sql, [username], (err, result) => {
       if (err) reject(err);
-      else resolve(result[0]);
+      else resolve(result);
     });
   });
 };

@@ -8,6 +8,7 @@ import { hashPassword } from "../utils/hash.mjs";
 import { randomUUID } from "crypto";
 import { generateToken } from "../utils/generateToken.mjs";
 import { verifyToken } from "../utils/verifyToken.mjs";
+import { cleanInput } from "../utils/cleanInputs.mjs";
 
 export const register = async (req, res) => {
   let { username, password, retypePassword } = req.body;
@@ -18,9 +19,9 @@ export const register = async (req, res) => {
   }
 
   //sanitize inputs
-  username = username.replace(/[<>\\'"`?]/gi, "");
-  password = password.replace(/[<>\\'"`?]/gi, "");
-  retypePassword = retypePassword.replace(/[<>\\'"`?]/gi, "");
+  username = await cleanInput(username);
+  password = await cleanInput(password);
+  retypePassword = await cleanInput(retypePassword);
 
   try {
     const checkDoubles = await getUserByUsername(username);
