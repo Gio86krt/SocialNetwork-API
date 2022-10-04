@@ -17,4 +17,5 @@ The app uses MySQL database, the script to create the sample tables are located 
 
 #### Info:
 
+Author: [Gio86krt](https://github.com/Gio86krt)
 Date: 2022-10-04
