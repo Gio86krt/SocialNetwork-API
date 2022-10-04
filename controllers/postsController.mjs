@@ -1,9 +1,9 @@
 import { pool } from "../database/connection.mjs";
 
-export const getPosts = (req, res) => {
+export const getPosts = () => {
   return new Promise(async (resolve, reject) => {
     const sql =
-      "SELECT users.username, content FROM tweets join users on users.guid = author";
+      "SELECT posts.guid, users.username, posts.content FROM posts JOIN users ON users.guid = author";
     await pool.query(sql, [], (err, result) => {
       if (err) {
         reject(err);
