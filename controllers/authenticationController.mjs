@@ -1,15 +1,26 @@
 import { pool } from "../database/connection.mjs";
 import { randomUUID } from "crypto";
+import bcrypt from "bcrypt";
+import dotenv from "dotenv";
 
-export const getUserByUsername = (username) => {
+dotenv.config();
+
+export const loginUser = (username, password) => {
   return new Promise(async (resolve, reject) => {
     const sql =
-      "SELECT guid, username, password FROM users WHERE username = ?;";
+      "SELECT guid, username, password, token FROM users WHERE username = ?;";
     await pool.query(sql, [username], (err, result) => {
       if (err) {
         reject(err);
       } else {
-        resolve(result[0]);
+        const verify = bcrypt.compareSync(password, result[0].password);
+        if (verify)
+          resolve({
+            username: result[0].username,
+            guid: result[0].guid,
+            token: result[0].token,
+          });
+        else reject(false);
       }
     });
   });
@@ -41,14 +52,13 @@ export const updateUserToken = async (guid, token) => {
   });
 };
 
-export const getUsers = () => {
+export const getUserByUsername = (username) => {
   return new Promise(async (resolve, reject) => {
-    const sql =
-      "SELECT guid, username, password FROM users WHERE username = ?;";
+    const sql = "SELECT guid, username FROM users WHERE username = ?;";
 
-    await pool.query(sql, [], (err, result) => {
+    await pool.query(sql, [username], (err, result) => {
       if (err) reject(err);
-      else resolve(result);
+      else resolve(result[0]);
     });
   });
 };
