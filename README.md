@@ -18,7 +18,7 @@ The app does not have a defined front end (yet perhaps?) so to send the requests
 
 #### How to run:
 
-- Fork the repository;
+- Clone the repository;
 - 'cd' into the folder;
 - run 'npm i' to install the packages;
 - use Postman to send the requests:
